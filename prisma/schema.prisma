@@ -1,0 +1,73 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model users{
+  id Int @id @default(autoincrement())
+  email String @db.VarChar(255) @unique
+  password String @db.VarChar(255)
+  name String? @db.VarChar(255)
+  credentials credentials[]
+  secure_notes secure_notes[]
+  cards cards[]
+  wifis wifis[]
+}
+
+enum CardType{
+  debito
+  credito
+  ambos
+}
+
+model credentials{
+  id Int @id @default(autoincrement())
+  owner_id Int
+  owner users @relation(fields: [owner_id], references: [id])
+  name String @db.VarChar(255)
+  url String @db.VarChar(255)
+  username String @db.VarChar(255)
+  password String @db.VarChar(255)
+  @@unique([owner_id, name])
+}
+
+model secure_notes{
+  id Int @id @default(autoincrement())
+  owner_id Int
+  owner users @relation(fields: [owner_id], references: [id])
+  title String @db.VarChar(50)
+  anotation String 
+  @@unique([owner_id,title])
+}
+
+
+model cards{
+  id Int @id @default(autoincrement())
+  owner_id Int
+  owner users @relation(fields: [owner_id], references: [id])
+  name String @db.VarChar(255)
+  number String @db.VarChar(255)
+  cvc String @db.VarChar(255)
+  expiration_date String @db.VarChar(255)
+  password String @db.VarChar(255)
+  is_virtual Boolean @db.Boolean
+  type CardType
+  @@unique([owner_id, name])
+}
+
+model wifis{
+  id Int @id @default(autoincrement())
+  owner_id Int
+  owner users @relation(fields: [owner_id], references: [id])
+  name String @db.VarChar(255)
+  network String @db.VarChar(255)
+  password String @db.VarChar(255)
+  @@unique([owner_id, name])
+}
