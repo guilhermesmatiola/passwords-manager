@@ -54,7 +54,7 @@ async function checkWifi(wifiId: number, owner_id: number) {
 	const wifi = await wifiRepository.getWifiById(wifiId);
 
 	if (!wifi)
-		throw { code: "NotFound", message: "Esta credencial não existe" };
+		throw { code: "NotFound", message: "Esta wifi não existe" };
 
 	if (wifi.owner_id !== owner_id)
 		throw {	code: "Anauthorized", message: "Você não tem permissão para ver Wi-fis de outros usuários.",};
