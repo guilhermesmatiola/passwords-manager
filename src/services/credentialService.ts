@@ -2,13 +2,25 @@ import * as credentialRepository from "../repositories/credentialRepository.js";
 import Cryptr from "cryptr";
 
 export async function sendCredentialsFromUser(id: number) {
-	//
+	
 	const cryptr = new Cryptr(process.env.SECRET);
-	//
 	const credentials = await credentialRepository.getAllCredentials(id);
 
-	return credentials;
-	//return { ...credentials, password: cryptr.decrypt(credentials.password) };
+	const sendInformations = credentials.map((elem, index) => {
+        const decodedPassword = cryptr.decrypt(elem.password);
+        
+            return {
+				id: elem.id,
+                name: elem.name,
+                url: elem.url,
+                username: elem.username,
+                password: cryptr.decrypt(elem.password),
+            };
+    });
+	
+    return { credentials: sendInformations };
+
+
 }
 
 export async function findCredentialById(id: number, owner_id: number) {
