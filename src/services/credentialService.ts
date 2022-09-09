@@ -7,7 +7,6 @@ export async function sendCredentialsFromUser(id: number) {
 	const credentials = await credentialRepository.getAllCredentials(id);
 
 	const sendInformations = credentials.map((elem, index) => {
-        const decodedPassword = cryptr.decrypt(elem.password);
         
             return {
 				id: elem.id,
