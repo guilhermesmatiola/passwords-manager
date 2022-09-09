@@ -52,6 +52,7 @@ model cards{
   id Int @id @default(autoincrement())
   owner_id Int
   owner users @relation(fields: [owner_id], references: [id])
+  title String @db.VarChar(255)
   name String @db.VarChar(255)
   number String @db.VarChar(255)
   cvc String @db.VarChar(255)
