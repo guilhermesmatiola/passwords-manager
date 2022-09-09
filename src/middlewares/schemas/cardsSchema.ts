@@ -2,6 +2,7 @@ import joi from "joi";
 
 const cardSchema = joi.object({
 
+    title:joi.string().required(),
     name:joi.string().required(),
     number:joi.string().required(),
     cvc:joi.string().max(3).min(3).required(),

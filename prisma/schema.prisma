@@ -58,7 +58,7 @@ model cards{
   cvc String @db.VarChar(255)
   expiration_date String @db.VarChar(255)
   password String @db.VarChar(255)
-  is_virtual Boolean @db.Boolean
+  is_virtual String @db.VarChar(255)
   type CardType
   @@unique([owner_id, name])
 }
