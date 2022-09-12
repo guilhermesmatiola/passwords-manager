@@ -10,6 +10,7 @@ export async function sendCardsFromUser(id: number) {
         
             return {
 				id: elem.id,
+				title:elem.title,
                 name: elem.name,
                 number: elem.number,
                 cvc: cryptr.decrypt(elem.cvc),
@@ -41,8 +42,8 @@ export async function createCard(	data: cardsRepository.TypeNewCard) {
 	await cardsRepository.insert({	...data, cvc: cryptr.encrypt(data.cvc),password: cryptr.encrypt(data.password)});
 }
 
-async function checkCardTitle(owner_id: number, name: string) {
-	const card = await cardsRepository.getCardsByTitle(	owner_id,name);
+async function checkCardTitle(owner_id: number, title: string) {
+	const card = await cardsRepository.getCardsByTitle(	owner_id,title);
 
 	if (card.length)
 		throw {	code: "Conflict",message: "Já existe um cartao com esse nome. Exclua a outra ou altere o nome deste.",};
